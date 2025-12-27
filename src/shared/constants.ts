@@ -28,34 +28,36 @@ export const ELEMENTS = ['FIRE', 'WATER', 'GRASS', 'LIGHT', 'DARK'] as const;
 
 export const GAME_PHASES = ['WAITING', 'PLAYING', 'RESOLVING', 'END'] as const;
 
-// Monster definitions - randomly assigned to players
+// Monster definitions - Assassin vs Thug
 export const MONSTERS = [
   {
-    id: 'flame_dragon',
-    name: 'Flame Dragon',
-    element: 'FIRE' as const,
+    id: 'assassin',
+    name: 'Assassin',
+    element: 'DARK' as const,
     hp: 100,
-    attack: 12,
-    defense: 5,
+    attack: 14,
+    defense: 4,
+    spriteFolder: 'Assassin',
     skill: {
-      id: 'fire_boost',
-      name: 'Fire Boost',
+      id: 'shadow_strike',
+      name: 'Shadow Strike',
       type: 'PASSIVE' as const,
-      description: 'Fire orb damage +20%'
+      description: 'Dark orb damage +20%'
     }
   },
   {
-    id: 'aqua_serpent',
-    name: 'Aqua Serpent',
-    element: 'WATER' as const,
-    hp: 110,
+    id: 'thug',
+    name: 'Thug',
+    element: 'FIRE' as const,
+    hp: 120,
     attack: 10,
     defense: 6,
+    spriteFolder: 'Thug',
     skill: {
-      id: 'water_shield',
-      name: 'Water Shield',
+      id: 'brute_force',
+      name: 'Brute Force',
       type: 'PASSIVE' as const,
-      description: 'Reduce incoming damage by 10%'
+      description: 'Fire orb damage +20%'
     }
   }
 ];

@@ -1,49 +1,58 @@
 /* Board and Orbs - puzzle board, orb styles and colors */
+/* Mobile First Approach */
 
 #board {
   display: grid;
-  grid-template-columns: repeat(7, 55px);
-  grid-template-rows: repeat(5, 55px);
-  gap: 6px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 4px;
   justify-content: center;
-  margin: 25px auto;
-  padding: 15px;
+  margin: 12px auto;
+  padding: 10px;
   background: rgba(0,0,0,0.3);
-  border-radius: 15px;
+  border-radius: 12px;
   border: 2px solid rgba(255,255,255,0.1);
+  max-width: 100%;
+  aspect-ratio: 7 / 5;
 }
 
 /* Base Orb Styles */
 .orb {
-  width: 55px;
-  height: 55px;
+  width: 100%;
+  aspect-ratio: 1;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 -3px 10px rgba(0,0,0,0.2);
-  border: 2px solid rgba(255,255,255,0.2);
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4), inset 0 -2px 6px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.2);
   position: relative;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+  touch-action: manipulation; /* Improve touch responsiveness */
 }
 
 .orb::before {
   content: '';
   position: absolute;
-  top: 5px;
-  left: 10px;
-  width: 15px;
-  height: 10px;
+  top: 3px;
+  left: 6px;
+  width: 10px;
+  height: 6px;
   background: rgba(255,255,255,0.4);
   border-radius: 50%;
   transform: rotate(-30deg);
 }
 
 .orb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5), inset 0 -3px 10px rgba(0,0,0,0.2);
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 -2px 6px rgba(0,0,0,0.2);
+}
+
+.orb:active {
+  transform: scale(0.95);
 }
 
 /* Orb Element Colors */
@@ -56,15 +65,16 @@
 
 /* Orb States */
 .orb.selected {
-  border: 3px solid #ffd700;
-  transform: scale(1.15);
-  box-shadow: 0 0 25px rgba(255,215,0,0.6);
+  border: 2px solid #ffd700;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255,215,0,0.6);
   animation: selectedPulse 0.5s ease-in-out infinite;
 }
 
 .orb.disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .orb.empty {
@@ -74,6 +84,61 @@
 
 /* Selection Animation */
 @keyframes selectedPulse {
-  0%, 100% { box-shadow: 0 0 25px rgba(255,215,0,0.6); }
-  50% { box-shadow: 0 0 35px rgba(255,215,0,0.8); }
+  0%, 100% { box-shadow: 0 0 15px rgba(255,215,0,0.6); }
+  50% { box-shadow: 0 0 25px rgba(255,215,0,0.8); }
+}
+
+/* Tablet and Desktop */
+@media (min-width: 480px) {
+  #board {
+    gap: 5px;
+    padding: 12px;
+    max-width: 400px;
+  }
+
+  .orb {
+    font-size: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 -2px 8px rgba(0,0,0,0.2);
+    border-width: 2px;
+  }
+
+  .orb::before {
+    top: 4px;
+    left: 8px;
+    width: 12px;
+    height: 8px;
+  }
+}
+
+@media (min-width: 768px) {
+  #board {
+    gap: 6px;
+    margin: 25px auto;
+    padding: 15px;
+    border-radius: 15px;
+    max-width: 450px;
+  }
+
+  .orb {
+    font-size: 26px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 -3px 10px rgba(0,0,0,0.2);
+  }
+
+  .orb::before {
+    top: 5px;
+    left: 10px;
+    width: 15px;
+    height: 10px;
+  }
+
+  .orb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5), inset 0 -3px 10px rgba(0,0,0,0.2);
+  }
+
+  .orb.selected {
+    border-width: 3px;
+    transform: scale(1.15);
+    box-shadow: 0 0 25px rgba(255,215,0,0.6);
+  }
 }

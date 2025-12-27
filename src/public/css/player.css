@@ -1,19 +1,24 @@
 /* Player UI - player cards, HP, charge meter */
+/* Mobile First Approach - Simplified Layout */
 
 .player-info {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  gap: 20px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 6px;
 }
 
 .player {
   flex: 1;
-  background: rgba(255,255,255,0.1);
-  padding: 15px;
-  border-radius: 15px;
+  max-width: 140px;
+  background: rgba(255,255,255,0.08);
+  padding: 8px;
+  border-radius: 10px;
   transition: all 0.3s ease;
   border: 2px solid transparent;
+  text-align: center;
 }
 
 .player.you {
@@ -22,37 +27,68 @@
 
 .player.active {
   border-color: #ffd700;
-  box-shadow: 0 0 30px rgba(255,215,0,0.4);
-  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(255,215,0,0.4);
 }
 
-.player h3 {
-  font-size: 1.1em;
-  margin-bottom: 8px;
+/* VS Divider */
+.vs-divider {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6em;
+  color: #e94560;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+  padding: 0 4px;
+}
+
+/* Character Sprite */
+.sprite-container {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.monster-icon {
-  font-size: 1.5em;
+.character-sprite {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.1s;
 }
 
-.monster-name {
-  font-size: 0.85em;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 10px;
+.character-sprite.attacking {
+  animation: attackPulse 0.3s ease;
 }
 
-/* Element Badges */
+.character-sprite.hurt {
+  animation: hurtShake 0.4s ease;
+}
+
+@keyframes attackPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2) translateX(10px); }
+  100% { transform: scale(1); }
+}
+
+@keyframes hurtShake {
+  0%, 100% { transform: translateX(0); filter: brightness(1); }
+  20% { transform: translateX(-5px); filter: brightness(1.5) saturate(0.5); }
+  40% { transform: translateX(5px); filter: brightness(1); }
+  60% { transform: translateX(-5px); filter: brightness(1.5) saturate(0.5); }
+  80% { transform: translateX(5px); filter: brightness(1); }
+}
+
+/* Element Badges - Compact */
 .element-badge {
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 0.75em;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.55em;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .element-badge.FIRE { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
@@ -61,30 +97,23 @@
 .element-badge.LIGHT { background: linear-gradient(135deg, #ffe066, #fcc419); color: #333; }
 .element-badge.DARK { background: linear-gradient(135deg, #6c5ce7, #5f3dc4); }
 
-/* HP Bar */
+/* HP Bar - Compact with inline label */
 .hp-container {
-  margin: 10px 0;
-}
-
-.hp-text {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9em;
-  margin-bottom: 5px;
+  margin: 4px 0;
 }
 
 .hp-bar {
   width: 100%;
-  height: 20px;
+  height: 12px;
   background: rgba(0,0,0,0.4);
-  border-radius: 10px;
+  border-radius: 6px;
   overflow: hidden;
   position: relative;
 }
 
 .hp-fill {
   height: 100%;
-  background: linear-gradient(90deg, #ff6b6b, #ee5a5a);
+  background: linear-gradient(90deg, #51cf66, #40c057);
   transition: width 0.5s ease;
   position: relative;
 }
@@ -99,45 +128,47 @@
   background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
 }
 
-/* Charge Meter */
-.charge-container {
-  margin-top: 10px;
+.hp-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.5em;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  white-space: nowrap;
 }
 
-.charge-text {
-  font-size: 0.8em;
-  margin-bottom: 5px;
-  color: rgba(255,255,255,0.8);
-}
-
+/* Charge Meter - Compact */
 .charge-bar {
   display: flex;
-  gap: 3px;
+  gap: 2px;
+  margin-top: 4px;
 }
 
 .charge-pip {
   flex: 1;
-  height: 10px;
+  height: 6px;
   background: rgba(255,255,255,0.2);
-  border-radius: 3px;
+  border-radius: 2px;
   transition: all 0.3s ease;
 }
 
 .charge-pip.filled {
   background: linear-gradient(180deg, #00ff88, #00cc6a);
-  box-shadow: 0 0 10px rgba(0,255,136,0.5);
+  box-shadow: 0 0 6px rgba(0,255,136,0.5);
 }
 
 /* Turn Timer */
 #turn-timer-container {
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 #turn-timer-bar {
   width: 100%;
-  height: 8px;
+  height: 5px;
   background: rgba(255,255,255,0.2);
-  border-radius: 4px;
+  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -159,29 +190,118 @@
 }
 
 #turn-timer-text {
-  font-size: 0.9em;
-  margin-top: 5px;
+  font-size: 0.7em;
+  margin-top: 3px;
   color: rgba(255,255,255,0.8);
 }
 
-/* Messages */
+/* Messages - Moves at top */
 .moves-display {
-  margin-top: 15px;
+  margin-bottom: 8px;
   font-family: 'Press Start 2P', cursive;
-  font-size: 1em;
-  padding: 8px 16px;
+  font-size: 0.65em;
+  padding: 5px 10px;
   background: linear-gradient(135deg, #4c6ef5, #7950f2);
-  border-radius: 20px;
+  border-radius: 12px;
   display: inline-block;
-  box-shadow: 0 4px 15px rgba(121,80,242,0.4);
+  box-shadow: 0 2px 8px rgba(121,80,242,0.4);
 }
 
 #message {
-  margin-top: 20px;
-  font-size: 1.3em;
+  margin-top: 8px;
+  font-size: 0.9em;
   font-weight: bold;
-  min-height: 35px;
-  padding: 10px;
+  min-height: 24px;
+  padding: 6px;
   background: rgba(0,0,0,0.2);
-  border-radius: 10px;
+  border-radius: 6px;
+}
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+  .player-info {
+    margin-bottom: 15px;
+    gap: 15px;
+  }
+
+  .player {
+    max-width: 180px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .player.active {
+    box-shadow: 0 0 25px rgba(255,215,0,0.4);
+  }
+
+  .vs-divider {
+    font-size: 0.8em;
+    padding: 0 10px;
+  }
+
+  .sprite-container {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+  }
+
+  .element-badge {
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.7em;
+    margin-bottom: 6px;
+  }
+
+  .hp-container {
+    margin: 6px 0;
+  }
+
+  .hp-bar {
+    height: 16px;
+    border-radius: 8px;
+  }
+
+  .hp-label {
+    font-size: 0.6em;
+  }
+
+  .charge-bar {
+    gap: 3px;
+    margin-top: 6px;
+  }
+
+  .charge-pip {
+    height: 8px;
+    border-radius: 3px;
+  }
+
+  #turn-timer-container {
+    margin-bottom: 10px;
+  }
+
+  #turn-timer-bar {
+    height: 6px;
+    border-radius: 3px;
+  }
+
+  #turn-timer-text {
+    font-size: 0.8em;
+    margin-top: 4px;
+  }
+
+  .moves-display {
+    margin-bottom: 12px;
+    font-size: 0.85em;
+    padding: 8px 16px;
+    border-radius: 15px;
+  }
+
+  #message {
+    margin-top: 15px;
+    font-size: 1.1em;
+    min-height: 30px;
+    padding: 8px;
+    border-radius: 8px;
+  }
 }

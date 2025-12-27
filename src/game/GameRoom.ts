@@ -173,6 +173,7 @@ export class GameRoom {
     this.clearTimers();
 
     // Broadcast move result with cascade steps for animation
+    // Include the FINAL game state so client can render correctly after animations
     this.broadcast({
       type: 'MOVE_RESULT',
       payload: {
@@ -185,10 +186,12 @@ export class GameRoom {
           chargeGained: result.chargeGained,
           cascadeCount: result.cascadeCount,
           cascadeSteps: result.cascadeSteps,
-          bonusMoves: result.bonusMoves
+          bonusMoves: result.bonusMoves,
+          attackExecuted: (result as any).attackExecuted || false
         },
         movesRemaining: this.gameState.movesRemaining,
-        turnChanged: this.gameState.currentTurn !== player.playerNumber
+        turnChanged: this.gameState.currentTurn !== player.playerNumber,
+        gameState: this.gameState.serialize() // Include final state for sync
       }
     });
 
@@ -198,7 +201,7 @@ export class GameRoom {
       return;
     }
 
-    // Broadcast updated game state
+    // Broadcast updated game state (for any clients that missed the MOVE_RESULT)
     this.broadcast({
       type: 'GAME_STATE_UPDATE',
       payload: {
