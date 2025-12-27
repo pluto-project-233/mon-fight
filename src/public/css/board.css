@@ -1,0 +1,79 @@
+/* Board and Orbs - puzzle board, orb styles and colors */
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(7, 55px);
+  grid-template-rows: repeat(5, 55px);
+  gap: 6px;
+  justify-content: center;
+  margin: 25px auto;
+  padding: 15px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 15px;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+/* Base Orb Styles */
+.orb {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 -3px 10px rgba(0,0,0,0.2);
+  border: 2px solid rgba(255,255,255,0.2);
+  position: relative;
+}
+
+.orb::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 15px;
+  height: 10px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transform: rotate(-30deg);
+}
+
+.orb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5), inset 0 -3px 10px rgba(0,0,0,0.2);
+}
+
+/* Orb Element Colors */
+.orb.FIRE { background: linear-gradient(135deg, #ff6b6b, #c92a2a); }
+.orb.WATER { background: linear-gradient(135deg, #4dabf7, #1864ab); }
+.orb.GRASS { background: linear-gradient(135deg, #51cf66, #2b8a3e); }
+.orb.LIGHT { background: linear-gradient(135deg, #ffe066, #fab005); }
+.orb.DARK { background: linear-gradient(135deg, #9775fa, #5f3dc4); }
+.orb.HEAL { background: linear-gradient(135deg, #f783ac, #c2255c); }
+
+/* Orb States */
+.orb.selected {
+  border: 3px solid #ffd700;
+  transform: scale(1.15);
+  box-shadow: 0 0 25px rgba(255,215,0,0.6);
+  animation: selectedPulse 0.5s ease-in-out infinite;
+}
+
+.orb.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.orb.empty {
+  background: rgba(0,0,0,0.2) !important;
+  box-shadow: none !important;
+}
+
+/* Selection Animation */
+@keyframes selectedPulse {
+  0%, 100% { box-shadow: 0 0 25px rgba(255,215,0,0.6); }
+  50% { box-shadow: 0 0 35px rgba(255,215,0,0.8); }
+}

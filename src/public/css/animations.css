@@ -1,0 +1,78 @@
+/* Animations - match effects, cascade animations, damage floaters */
+
+/* Match Highlight */
+.orb.matched {
+  animation: matchGlow 0.4s ease-in-out;
+  box-shadow: 0 0 20px #fff, 0 0 30px #ffd700;
+  transform: scale(1.15);
+  z-index: 10;
+}
+
+@keyframes matchGlow {
+  0% { transform: scale(1); box-shadow: none; }
+  50% { transform: scale(1.2); box-shadow: 0 0 30px #fff, 0 0 40px #ffd700; }
+  100% { transform: scale(1.15); box-shadow: 0 0 20px #fff, 0 0 30px #ffd700; }
+}
+
+/* Match Flash (legacy) */
+.orb.matching {
+  animation: matchFlash 0.3s ease-in-out;
+}
+
+@keyframes matchFlash {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* Clearing Animation */
+.orb.clearing {
+  animation: clearOrb 0.3s ease-out forwards;
+}
+
+@keyframes clearOrb {
+  0% { transform: scale(1.15); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.7; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+/* Gravity Drop */
+.orb.dropping {
+  animation: dropIn 0.25s ease-in;
+}
+
+@keyframes dropIn {
+  0% { transform: translateY(-100%); opacity: 0.5; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* New Orb Spawn */
+.orb.new-orb {
+  animation: spawnOrb 0.2s ease-out;
+}
+
+@keyframes spawnOrb {
+  0% { transform: scale(0) translateY(-50px); opacity: 0; }
+  60% { transform: scale(1.2) translateY(0); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Damage Floater */
+.damage-floater {
+  position: fixed;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5em;
+  color: #ff6b6b;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+  pointer-events: none;
+  animation: floatUp 1s ease-out forwards;
+  z-index: 1000;
+}
+
+.damage-floater.heal {
+  color: #00ff88;
+}
+
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+}

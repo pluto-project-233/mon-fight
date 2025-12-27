@@ -1,0 +1,63 @@
+/* Overlay - game over screen, modals */
+
+#game-over-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+}
+
+#game-over-overlay.active {
+  display: flex;
+  animation: fadeIn 0.5s ease;
+}
+
+.game-over-content {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  border-radius: 20px;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+.game-over-content h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.game-over-content.win h2 {
+  color: #00ff88;
+  text-shadow: 0 0 30px rgba(0,255,136,0.5);
+}
+
+.game-over-content.lose h2 {
+  color: #ff6b6b;
+  text-shadow: 0 0 30px rgba(255,107,107,0.5);
+}
+
+.play-again-btn {
+  margin-top: 20px;
+  padding: 15px 40px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  background: linear-gradient(135deg, #e94560, #c73e54);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-again-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(233,69,96,0.5);
+}
