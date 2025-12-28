@@ -10,6 +10,7 @@ export interface PlayerState {
   odlplayerNumber: PlayerNumber;
   monsterId: string;
   monsterName: string;
+  spriteFolder: string;
   hp: number;
   maxHp: number;
   attack: number;
@@ -62,6 +63,7 @@ export class GameState {
       odlplayerNumber: playerNumber,
       monsterId: monster.id,
       monsterName: monster.name,
+      spriteFolder: monster.spriteFolder,
       hp: monster.hp,
       maxHp: monster.hp,
       attack: monster.attack,

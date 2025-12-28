@@ -10,6 +10,10 @@ export function createHttpServer() {
   const publicPath = path.join(__dirname, '../../src/public');
   app.use(express.static(publicPath));
 
+  // Serve asset folder for character sprites
+  const assetPath = path.join(__dirname, '../../asset');
+  app.use('/asset', express.static(assetPath));
+
   // Health check endpoint
   app.get('/health', (req, res) => {
     res.json({ status: 'ok' });

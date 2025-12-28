@@ -1,4 +1,5 @@
 /* Base styles - reset, typography, body */
+/* Mobile First Approach */
 
 * {
   margin: 0;
@@ -10,52 +11,56 @@ body {
   font-family: 'Nunito', sans-serif;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   color: white;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 10px;
 }
 
 #app {
   text-align: center;
-  max-width: 900px;
   width: 100%;
-  padding: 20px;
+  max-width: 100%;
+  padding: 10px;
 }
 
 h1 {
   font-family: 'Press Start 2P', cursive;
-  font-size: 1.8em;
-  margin-bottom: 20px;
-  text-shadow: 3px 3px 0px #e94560, 6px 6px 0px rgba(0,0,0,0.3);
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 0px #e94560, 4px 4px 0px rgba(0,0,0,0.3);
   color: #fff;
+  line-height: 1.4;
 }
 
 #status {
   background: rgba(255,255,255,0.1);
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.2);
 }
 
 #connection-status {
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold;
 }
 
 .loading-spinner {
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255,255,255,0.3);
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
   border-radius: 50%;
   border-top-color: #e94560;
   animation: spin 1s ease-in-out infinite;
-  margin-left: 10px;
+  margin-left: 8px;
   vertical-align: middle;
 }
 
@@ -66,10 +71,11 @@ h1 {
 #game-container {
   display: none;
   background: rgba(255,255,255,0.05);
-  padding: 25px;
-  border-radius: 20px;
+  padding: 12px;
+  border-radius: 15px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.1);
+  width: 100%;
 }
 
 #game-container.active {
@@ -80,4 +86,43 @@ h1 {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+  body {
+    justify-content: center;
+    padding: 20px;
+  }
+
+  #app {
+    max-width: 900px;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  #status {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  #connection-status {
+    font-size: 1.2em;
+  }
+
+  .loading-spinner {
+    width: 20px;
+    height: 20px;
+    border-width: 3px;
+    margin-left: 10px;
+  }
+
+  #game-container {
+    padding: 25px;
+    border-radius: 20px;
+  }
 }

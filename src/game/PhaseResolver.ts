@@ -105,17 +105,28 @@ export class PhaseResolver {
       result.cascadeSteps.push(cascadeStep);
     }
 
-    // Phase 3: CHARGE - Accumulate charge from match count
-    const matchCount = result.matches.length;
-    result.chargeGained = matchCount;
-
+    // Phase 3: CHARGE - Only accumulate charge from matches of player's element
+    // Charge = total number of orbs matched (not number of matches)
     const currentPlayer = gameState.players.get(gameState.currentTurn)!;
+    const playerElement = currentPlayer.element;
+    
+    // Count total orbs from matches that match the player's element
+    let elementOrbsMatched = 0;
+    for (const match of result.matches) {
+      if (match.type === playerElement) {
+        // Add the number of orbs in this match (3 orbs = +3, 4 orbs = +4, etc.)
+        elementOrbsMatched += match.orbs.length;
+      }
+    }
+    
+    result.chargeGained = elementOrbsMatched;
     currentPlayer.charge = Math.min(
       currentPlayer.charge + result.chargeGained,
       CHARGE_MAX
     );
 
-    // Phase 4: DAMAGE - Calculate and apply damage
+    // Phase 4: DAMAGE - Only deal damage if charge is full (attack triggered)
+    // Calculate potential damage for display purposes
     if (result.matches.length > 0) {
       const opponent = gameState.getOpponent(gameState.currentTurn);
       const opponentState = gameState.players.get(opponent)!;
@@ -128,13 +139,27 @@ export class PhaseResolver {
         1.0 // skill modifier - to be implemented
       );
 
-      result.totalDamage = damageResult.totalDamage;
+      // Only apply damage if charge is full (attack!)
+      if (currentPlayer.charge >= CHARGE_MAX) {
+        result.totalDamage = damageResult.totalDamage;
+        
+        // Apply damage to opponent
+        opponentState.hp = Math.max(0, opponentState.hp - result.totalDamage);
+        
+        // Reset charge after attack
+        currentPlayer.charge = 0;
+        
+        // Flag that attack was executed
+        (result as any).attackExecuted = true;
+      } else {
+        // Store potential damage but don't apply it
+        (result as any).pendingDamage = damageResult.totalDamage;
+        result.totalDamage = 0;
+        (result as any).attackExecuted = false;
+      }
+
+      // Heal is always applied (not gated by charge)
       result.healAmount = damageResult.healAmount;
-
-      // Apply damage to opponent
-      opponentState.hp = Math.max(0, opponentState.hp - result.totalDamage);
-
-      // Apply heal to current player
       if (result.healAmount > 0) {
         currentPlayer.hp = Math.min(
           currentPlayer.hp + result.healAmount,
