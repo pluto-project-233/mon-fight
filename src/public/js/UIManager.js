@@ -30,6 +30,10 @@ class UIManager {
   updatePlayerInfo(playerNum, playerData, spriteAnimator) {
     const prefix = playerNum === 'PLAYER_1' ? 'p1' : 'p2';
 
+    // Update monster name in header
+    const nameEl = document.getElementById(`${prefix}-name`);
+    if (nameEl) nameEl.textContent = playerData.monsterName.toUpperCase();
+
     const hpEl = document.getElementById(`${prefix}-hp`);
     const maxHpEl = document.getElementById(`${prefix}-maxhp`);
     if (hpEl) hpEl.textContent = playerData.hp;
@@ -41,8 +45,8 @@ class UIManager {
 
     if (spriteAnimator) {
       const sprite = document.getElementById(`${prefix}-sprite`);
-      if (sprite && (!sprite.src || !sprite.src.includes(playerData.monsterName))) {
-        spriteAnimator.startIdleAnimation(playerNum, playerData.monsterName);
+      if (sprite && (!sprite.src || !sprite.src.includes(playerData.spriteFolder))) {
+        spriteAnimator.startIdleAnimation(playerNum, playerData.spriteFolder);
       }
     }
 

@@ -28,16 +28,17 @@ export const ELEMENTS = ['FIRE', 'WATER', 'GRASS', 'LIGHT', 'DARK'] as const;
 
 export const GAME_PHASES = ['WAITING', 'PLAYING', 'RESOLVING', 'END'] as const;
 
-// Monster definitions - Assassin vs Thug
+// Monster definitions
 export const MONSTERS = [
   {
-    id: 'assassin',
+    id: 'assassin_dark',
     name: 'Assassin',
     element: 'DARK' as const,
     hp: 100,
     attack: 14,
     defense: 4,
-    spriteFolder: 'Assassin',
+    spriteFolder: 'assassin_dark',
+    hasDirections: true,
     skill: {
       id: 'shadow_strike',
       name: 'Shadow Strike',
@@ -46,18 +47,67 @@ export const MONSTERS = [
     }
   },
   {
-    id: 'thug',
+    id: 'thug_fire',
     name: 'Thug',
     element: 'FIRE' as const,
     hp: 120,
     attack: 10,
     defense: 6,
-    spriteFolder: 'Thug',
+    spriteFolder: 'thug_fire',
+    hasDirections: true,
     skill: {
       id: 'brute_force',
       name: 'Brute Force',
       type: 'PASSIVE' as const,
       description: 'Fire orb damage +20%'
+    }
+  },
+  {
+    id: 'robber_light',
+    name: 'Robber',
+    element: 'LIGHT' as const,
+    hp: 90,
+    attack: 16,
+    defense: 3,
+    spriteFolder: 'robber_light',
+    hasDirections: true,
+    skill: {
+      id: 'quick_hands',
+      name: 'Quick Hands',
+      type: 'PASSIVE' as const,
+      description: 'Light orb damage +20%'
+    }
+  },
+  {
+    id: 'golem_green',
+    name: 'Golem',
+    element: 'GRASS' as const,
+    hp: 150,
+    attack: 8,
+    defense: 10,
+    spriteFolder: 'golem_green',
+    hasDirections: false,
+    skill: {
+      id: 'stone_skin',
+      name: 'Stone Skin',
+      type: 'PASSIVE' as const,
+      description: 'Grass orb damage +20%'
+    }
+  },
+  {
+    id: 'minotaur_blue',
+    name: 'Minotaur',
+    element: 'WATER' as const,
+    hp: 130,
+    attack: 12,
+    defense: 7,
+    spriteFolder: 'minotaur_blue',
+    hasDirections: false,
+    skill: {
+      id: 'tidal_rage',
+      name: 'Tidal Rage',
+      type: 'PASSIVE' as const,
+      description: 'Water orb damage +20%'
     }
   }
 ];

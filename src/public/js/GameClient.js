@@ -239,10 +239,10 @@ class GameClient {
     const defenderData = this.serverState?.players?.[defenderNum];
 
     if (result.totalDamage > 0 && result.attackExecuted) {
-      this.spriteAnimator.playAttackAnimation(attackerNum, attackerData?.monsterName);
+      this.spriteAnimator.playAttackAnimation(attackerNum, attackerData?.spriteFolder);
       await this.sleep(300);
 
-      this.spriteAnimator.playHurtAnimation(defenderNum, defenderData?.monsterName);
+      this.spriteAnimator.playHurtAnimation(defenderNum, defenderData?.spriteFolder);
 
       const targetPlayer = payload.player === 'PLAYER_1' ? 'player2' : 'player1';
       this.uiManager.showDamageFloater(targetPlayer, result.totalDamage, false);
