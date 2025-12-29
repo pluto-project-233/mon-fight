@@ -1,121 +1,169 @@
-/* Player UI - player cards, HP, charge meter */
-/* Mobile First Approach - Simplified Layout */
+/* Player UI - Modern Card Design */
+/* Mobile First Approach */
 
 .player-info {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-  gap: 6px;
+  align-items: stretch;
+  margin-bottom: 12px;
+  gap: 8px;
 }
 
 .player {
   flex: 1;
-  max-width: 140px;
-  background: rgba(255,255,255,0.08);
-  padding: 8px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-  text-align: center;
+  max-width: 160px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  padding: 12px 10px;
+  border-radius: var(--radius-md);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  overflow: hidden;
 }
 
-.player.you {
-  border-color: #00ff88;
+.player::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.player.you::before {
+  opacity: 1;
+  background: linear-gradient(90deg, var(--success), #34d399);
 }
 
 .player.active {
-  border-color: #ffd700;
-  box-shadow: 0 0 15px rgba(255,215,0,0.4);
+  border-color: var(--warning);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25), inset 0 0 20px rgba(245, 158, 11, 0.05);
+}
+
+.player.active::before {
+  opacity: 1;
+  background: linear-gradient(90deg, var(--warning), #fbbf24);
 }
 
 /* VS Divider */
 .vs-divider {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.6em;
-  color: #e94560;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-muted);
   padding: 0 4px;
+  letter-spacing: 0.05em;
 }
 
 /* Character Sprite */
 .sprite-container {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 4px;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.2);
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
   overflow: hidden;
+  border: 1px solid var(--border-subtle);
 }
 
 .character-sprite {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  transition: transform 0.1s;
+  transition: transform 0.15s ease;
+  image-rendering: auto;
 }
 
 .character-sprite.attacking {
-  animation: attackPulse 0.3s ease;
+  animation: attackBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .character-sprite.hurt {
-  animation: hurtShake 0.4s ease;
+  animation: hurtShake 0.5s ease;
 }
 
-@keyframes attackPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2) translateX(10px); }
-  100% { transform: scale(1); }
+@keyframes attackBounce {
+  0% { transform: scale(1) translateX(0); }
+  30% { transform: scale(1.15) translateX(8px); }
+  60% { transform: scale(1.05) translateX(-4px); }
+  100% { transform: scale(1) translateX(0); }
 }
 
 @keyframes hurtShake {
   0%, 100% { transform: translateX(0); filter: brightness(1); }
-  20% { transform: translateX(-5px); filter: brightness(1.5) saturate(0.5); }
-  40% { transform: translateX(5px); filter: brightness(1); }
-  60% { transform: translateX(-5px); filter: brightness(1.5) saturate(0.5); }
-  80% { transform: translateX(5px); filter: brightness(1); }
+  10% { transform: translateX(-6px); filter: brightness(1.8) saturate(0.3); }
+  30% { transform: translateX(6px); filter: brightness(1); }
+  50% { transform: translateX(-4px); filter: brightness(1.5) saturate(0.5); }
+  70% { transform: translateX(4px); filter: brightness(1); }
+  90% { transform: translateX(-2px); }
 }
 
-/* Element Badges - Compact */
+/* Element Badges - Modern Pills */
 .element-badge {
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 8px;
-  font-size: 0.55em;
-  font-weight: bold;
-  margin-bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
 }
 
-.element-badge.FIRE { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
-.element-badge.WATER { background: linear-gradient(135deg, #4dabf7, #339af0); }
-.element-badge.GRASS { background: linear-gradient(135deg, #51cf66, #40c057); }
-.element-badge.LIGHT { background: linear-gradient(135deg, #ffe066, #fcc419); color: #333; }
-.element-badge.DARK { background: linear-gradient(135deg, #6c5ce7, #5f3dc4); }
+.element-badge.FIRE { 
+  background: linear-gradient(135deg, #ef4444, #dc2626); 
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+.element-badge.WATER { 
+  background: linear-gradient(135deg, #3b82f6, #2563eb); 
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+.element-badge.GRASS { 
+  background: linear-gradient(135deg, #22c55e, #16a34a); 
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}
+.element-badge.LIGHT { 
+  background: linear-gradient(135deg, #fbbf24, #f59e0b); 
+  color: #1a1a2e;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+}
+.element-badge.DARK { 
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed); 
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
 
-/* HP Bar - Compact with inline label */
+/* HP Bar - Sleek Modern Design */
 .hp-container {
-  margin: 4px 0;
+  margin: 6px 0;
 }
 
 .hp-bar {
   width: 100%;
-  height: 12px;
-  background: rgba(0,0,0,0.4);
-  border-radius: 6px;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: var(--radius-full);
   overflow: hidden;
   position: relative;
+  border: 1px solid var(--border-subtle);
 }
 
 .hp-fill {
   height: 100%;
-  background: linear-gradient(90deg, #51cf66, #40c057);
-  transition: width 0.5s ease;
+  background: linear-gradient(90deg, var(--success), #34d399);
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
+  border-radius: var(--radius-full);
 }
 
 .hp-fill::after {
@@ -125,7 +173,8 @@
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+  background: linear-gradient(180deg, rgba(255,255,255,0.25), transparent);
+  border-radius: var(--radius-full) var(--radius-full) 0 0;
 }
 
 .hp-label {
@@ -133,175 +182,156 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 0.5em;
-  font-weight: bold;
-  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
   white-space: nowrap;
 }
 
-/* Charge Meter - Compact */
+/* Charge Meter - Glowing Pips */
 .charge-bar {
   display: flex;
-  gap: 2px;
-  margin-top: 4px;
+  gap: 3px;
+  margin-top: 8px;
 }
 
 .charge-pip {
   flex: 1;
   height: 6px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .charge-pip.filled {
-  background: linear-gradient(180deg, #00ff88, #00cc6a);
-  box-shadow: 0 0 6px rgba(0,255,136,0.5);
+  background: linear-gradient(180deg, #22c55e, #16a34a);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.5), 0 0 2px rgba(34, 197, 94, 0.8);
 }
 
-/* Turn Timer */
+/* Turn Timer - Sleek Bar */
 #turn-timer-container {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 #turn-timer-bar {
   width: 100%;
-  height: 5px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 3px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
   overflow: hidden;
 }
 
 #turn-timer-fill {
   height: 100%;
-  background: linear-gradient(90deg, #00ff88, #00cc6a);
+  background: linear-gradient(90deg, var(--success), #34d399);
   width: 100%;
   transition: width 0.1s linear;
+  border-radius: var(--radius-full);
 }
 
 #turn-timer-fill.warning {
-  background: linear-gradient(90deg, #ff6b6b, #ee5a5a);
-  animation: pulse 0.5s ease-in-out infinite;
+  background: linear-gradient(90deg, var(--danger), #f87171);
+  animation: timerPulse 0.6s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+@keyframes timerPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+  50% { opacity: 0.7; box-shadow: 0 0 20px rgba(239, 68, 68, 0.8); }
 }
 
 #turn-timer-text {
-  font-size: 0.7em;
-  margin-top: 3px;
-  color: rgba(255,255,255,0.8);
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-top: 4px;
+  color: var(--text-muted);
 }
 
-/* Messages - Moves at top */
+/* Moves Display - Modern Badge */
 .moves-display {
-  margin-bottom: 8px;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.65em;
-  padding: 5px 10px;
-  background: linear-gradient(135deg, #4c6ef5, #7950f2);
-  border-radius: 12px;
+  margin-bottom: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
   display: inline-block;
-  box-shadow: 0 2px 8px rgba(121,80,242,0.4);
+  box-shadow: var(--shadow-glow), var(--shadow-sm);
+  letter-spacing: 0.02em;
 }
 
+/* Message Bar */
 #message {
-  margin-top: 8px;
-  font-size: 0.9em;
-  font-weight: bold;
-  min-height: 24px;
-  padding: 6px;
-  background: rgba(0,0,0,0.2);
-  border-radius: 6px;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-height: 28px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
 }
 
 /* Tablet and Desktop */
 @media (min-width: 768px) {
   .player-info {
-    margin-bottom: 15px;
-    gap: 15px;
+    margin-bottom: 16px;
+    gap: 16px;
   }
 
   .player {
-    max-width: 180px;
-    padding: 12px;
-    border-radius: 12px;
-  }
-
-  .player.active {
-    box-shadow: 0 0 25px rgba(255,215,0,0.4);
+    max-width: 200px;
+    padding: 16px 14px;
+    border-radius: var(--radius-lg);
   }
 
   .vs-divider {
-    font-size: 0.8em;
-    padding: 0 10px;
+    font-size: 0.9rem;
+    padding: 0 8px;
   }
 
   .sprite-container {
-    width: 90px;
-    height: 90px;
-    margin-bottom: 6px;
-    border-radius: 10px;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
   }
 
   .element-badge {
-    padding: 3px 10px;
-    border-radius: 10px;
-    font-size: 0.7em;
-    margin-bottom: 6px;
-  }
-
-  .hp-container {
-    margin: 6px 0;
+    padding: 4px 14px;
+    font-size: 0.65rem;
+    margin-bottom: 10px;
   }
 
   .hp-bar {
-    height: 16px;
-    border-radius: 8px;
+    height: 18px;
   }
 
   .hp-label {
-    font-size: 0.6em;
-  }
-
-  .charge-bar {
-    gap: 3px;
-    margin-top: 6px;
+    font-size: 0.65rem;
   }
 
   .charge-pip {
     height: 8px;
-    border-radius: 3px;
-  }
-
-  #turn-timer-container {
-    margin-bottom: 10px;
   }
 
   #turn-timer-bar {
-    height: 6px;
-    border-radius: 3px;
+    height: 5px;
   }
 
   #turn-timer-text {
-    font-size: 0.8em;
-    margin-top: 4px;
+    font-size: 0.8rem;
   }
 
   .moves-display {
-    margin-bottom: 12px;
-    font-size: 0.85em;
-    padding: 8px 16px;
-    border-radius: 15px;
+    font-size: 0.85rem;
+    padding: 8px 20px;
+    margin-bottom: 14px;
   }
 
   #message {
-    margin-top: 15px;
-    font-size: 1.1em;
-    min-height: 30px;
-    padding: 8px;
-    border-radius: 8px;
+    margin-top: 16px;
+    font-size: 0.95rem;
+    padding: 10px 16px;
+    min-height: 32px;
   }
 }
