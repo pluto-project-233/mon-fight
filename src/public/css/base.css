@@ -70,10 +70,19 @@ body {
   padding: 8px;
 }
 
+/* Header Row with Sound Toggle */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
 h1 {
   font-size: 1.1rem;
   font-weight: 800;
-  margin-bottom: 12px;
+  margin: 0;
   background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -86,6 +95,53 @@ h1 span {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Sound Toggle Button */
+.sound-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+
+.sound-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-accent);
+}
+
+.sound-btn:active {
+  transform: scale(0.95);
+}
+
+.sound-btn.muted {
+  opacity: 0.5;
+}
+
+.sound-btn.muted .sound-icon::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: var(--danger);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.sound-icon {
+  font-size: 1.1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #status {

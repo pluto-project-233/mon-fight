@@ -38,7 +38,24 @@ class GameClient {
       this.updateInputLock();
     });
 
+    // Set up sound toggle button
+    this.setupSoundToggle();
+
     this.connect();
+  }
+
+  setupSoundToggle() {
+    const soundBtn = document.getElementById('sound-toggle');
+    if (soundBtn) {
+      soundBtn.addEventListener('click', () => {
+        const enabled = this.soundManager.toggle();
+        soundBtn.classList.toggle('muted', !enabled);
+        const icon = soundBtn.querySelector('.sound-icon');
+        if (icon) {
+          icon.textContent = enabled ? '🔊' : '🔇';
+        }
+      });
+    }
   }
 
   connect() {
@@ -80,6 +97,8 @@ class GameClient {
     switch (message.type) {
       case 'CONNECTED':
         this.playerId = message.payload.playerId;
+        // Start background music as soon as connected
+        this.soundManager.startBgMusic();
         break;
 
       case 'WAITING_FOR_OPPONENT':
@@ -133,6 +152,9 @@ class GameClient {
     console.log('[Game] Started!');
     this.roomId = payload.roomId;
     this.serverState = payload.gameState;
+
+    // Start background music
+    this.soundManager.startBgMusic();
 
     // Initialize BoardModel with server state
     this.boardModel.forceSync(this.serverState.board);
@@ -399,6 +421,7 @@ class GameClient {
   handleGameEnd(payload) {
     this.inputLocked = true;
     this.uiManager.stopTurnTimer();
+    this.soundManager.stopBgMusic();
     const isWinner = payload.winner === this.playerNumber;
     this.uiManager.showGameOver(isWinner, isWinner ? 'Congratulations, Champion!' : 'Better luck next time!');
     this.soundManager.play(isWinner ? 'win' : 'lose');
@@ -407,8 +430,10 @@ class GameClient {
   handleOpponentDisconnect() {
     this.inputLocked = true;
     this.uiManager.stopTurnTimer();
+    this.soundManager.stopBgMusic();
     this.uiManager.updateMessage('🚪 Opponent disconnected! You win!');
     this.uiManager.showGameOver(true, 'Opponent disconnected');
+    this.soundManager.play('win');
   }
 
   showError(msg) {
